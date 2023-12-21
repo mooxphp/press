@@ -1,6 +1,6 @@
 {
-    "name": "moox/builder",
-    "description": "This template is used for generating all Moox packages.",
+    "name": "moox/press",
+    "description": "This is my package press",
     "keywords": [
         "Laravel",
         "Filament",
@@ -18,17 +18,18 @@
     ],
     "require": {
         "spatie/laravel-package-tools": "^1.13.0",
+        "johnpbloch/wordpress": "^6.3",
         "filament/filament": "^3.0"
     },
     "autoload": {
         "psr-4": {
-            "Moox\\Builder\\": "src"
+            "Moox\\Press\\": "src"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Moox\\Builder\\BuilderServiceProvider"
+                "Moox\\Press\\PressServiceProvider"
             ]
         }
     },
