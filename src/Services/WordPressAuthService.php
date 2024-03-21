@@ -2,14 +2,15 @@
 
 namespace Moox\Press\Services;
 
+use Moox\Press\Helper\PasswordHash;
+
 class WordPressAuthService
 {
     protected $hasher;
 
     public function __construct()
     {
-        require_once base_path('public/wp/wp-includes/class-phpass.php');
-        $this->hasher = new \PasswordHash(8, true);
+        $this->hasher = new PasswordHash(8, true);
     }
 
     public function hashPassword($password)
