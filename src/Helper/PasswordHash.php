@@ -63,7 +63,7 @@ class PasswordHash
     /**
      * @param  int  $iteration_count_log2
      * @param  bool  $portable_hashes
-     * @return string
+     * @return void
      */
     public function PasswordHash($iteration_count_log2, $portable_hashes)
     {
