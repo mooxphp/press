@@ -1,9 +1,10 @@
 <?php
+
 namespace Moox\Press\Services;
 
-use Filament\Forms\Form;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
 use Filament\Pages\Auth\Login as BaseAuth;
 use Illuminate\Validation\ValidationException;
 
@@ -33,11 +34,11 @@ class Login extends BaseAuth
 
     protected function getCredentialsFromFormData(array $data): array
     {
-        $login_type = filter_var($data['login'], FILTER_VALIDATE_EMAIL ) ? 'user_email' : 'user_login';
+        $login_type = filter_var($data['login'], FILTER_VALIDATE_EMAIL) ? 'user_email' : 'user_login';
 
         return [
             $login_type => $data['login'],
-            'user_pass'  => $data['password'],
+            'user_pass' => $data['password'],
         ];
     }
 
@@ -46,5 +47,5 @@ class Login extends BaseAuth
         throw ValidationException::withMessages([
             'data.login' => __('filament-panels::pages/auth/login.messages.failed'),
         ]);
-}
+    }
 }
