@@ -6,6 +6,7 @@ namespace Moox\Press;
 
 use Illuminate\Support\Facades\Auth;
 use Moox\Press\Commands\InstallCommand;
+use Moox\Press\Providers\WordPressUserProvider;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -27,7 +28,7 @@ class PressServiceProvider extends PackageServiceProvider
         parent::boot();
 
         Auth::provider('wpuser-provider', function ($app, array $config) {
-            return new \Moox\Press\Providers\WpUserProvider($app['hash'], $config['model']);
+            return new WordPressUserProvider($app['hash'], $config['model']);
         });
     }
 }
