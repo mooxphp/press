@@ -3,11 +3,11 @@
 namespace Moox\Press\Models;
 
 use Filament\Models\Contracts\FilamentUser;
-use Moox\Press\Database\Factories\WpUserFactory;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Filament\Panel;
+use Moox\Press\Database\Factories\WpUserFactory;
 
 class WpUser extends Authenticatable implements FilamentUser
 {

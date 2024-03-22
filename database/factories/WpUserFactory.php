@@ -8,7 +8,7 @@ use Moox\Press\Models\WpUser;
 
 class WpUserFactory extends Factory
 {
-   /**
+    /**
      * The name of the factory's corresponding model.
      *
      * @var class-string<\Illuminate\Database\Eloquent\Model>
@@ -30,14 +30,15 @@ class WpUserFactory extends Factory
             'user_nicename' => fake()->userName(),
             'user_email' => fake()->email(),
             'user_url' => fake()->url(),
-            'user_registered'=> fake()->time(),
+            'user_registered' => fake()->time(),
             'user_activation_key' => '',
             'user_status' => 0,
             'display_name' => fake()->name(),
         ];
     }
 
-    function generatePassword($length = 12) {
+    public function generatePassword($length = 12)
+    {
         // Define the character set for the password
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_';
 
