@@ -2,10 +2,14 @@
 
 namespace Moox\Press\Models;
 
+use Filament\Models\Contracts\FilamentUser;
+use Moox\Press\Database\Factories\WpUserFactory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Filament\Panel;
 
-class WpUser extends Authenticatable
+class WpUser extends Authenticatable implements FilamentUser
 {
     use HasFactory;
 
@@ -62,5 +66,15 @@ class WpUser extends Authenticatable
     public function getPasswordAttribute()
     {
         return $this->attributes['user_pass'];
+    }
+
+    protected static function newFactory(): Factory
+    {
+        return WpUserFactory::new();
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return true;
     }
 }
