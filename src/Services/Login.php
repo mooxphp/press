@@ -10,6 +10,7 @@ use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 use Filament\Notifications\Notification;
 use Filament\Pages\Auth\Login as BaseAuth;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
 
 class Login extends BaseAuth
@@ -70,11 +71,21 @@ class Login extends BaseAuth
             $this->throwFailureValidationException();
         }
 
+        $response = Http::post('https://'.$_SERVER['SERVER_NAME'].'/wp/wp-json/custom/v1/login/', [
+            'username' => $data['login'],
+            'password' => $data['password'],
+            'remember' => $data['remember'],
+        ]);
+
+        //dd($response->json());
+
         Auth::login($user, $data['remember'] ?? false);
 
         session()->regenerate();
 
         return app(LoginResponse::class);
+
+        // return redirect('https://'.$_SERVER['SERVER_NAME'].'/wp/wp-login.php?auth_token='.$user->ID);
     }
 
     protected function getCredentialsFromFormData(array $data): array
