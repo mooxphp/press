@@ -21,7 +21,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Moox\\Press\\": "src"
+            "Moox\\Press\\": "src",
+            "Moox\\Press\\Database\\Factories\\": "database/factories"
         }
     },
     "extra": {
