@@ -13,6 +13,11 @@ class WpUser extends Authenticatable implements FilamentUser
 {
     use HasFactory;
 
+    public function userMeta()
+    {
+        return $this->hasMany(WpUserMeta::class, 'user_id');
+    }
+
     protected $fillable = [
         'user_login',
         'user_pass',
@@ -23,8 +28,7 @@ class WpUser extends Authenticatable implements FilamentUser
         'user_activation_key',
         'user_status',
         'display_name',
-        'spam',
-        'deleted',
+
     ];
 
     protected $searchableFields = ['*'];

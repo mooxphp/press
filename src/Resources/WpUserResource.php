@@ -116,35 +116,26 @@ class WpUserResource extends Resource
                             'lg' => 12,
                         ]),
 
-                    TextInput::make('display_name')
+                    TextInput::make('first_name')
                         ->rules(['max:255', 'string'])
                         ->required()
-                        ->placeholder('Display Name')
+                        ->placeholder('First Name')
                         ->columnSpan([
                             'default' => 12,
                             'md' => 12,
                             'lg' => 12,
                         ]),
 
-                    Toggle::make('spam')
-                        ->rules(['boolean'])
-                        ->required()
-                        ->default('0')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
+                    TextInput::make('last_name')
+                    ->rules(['max:255', 'string'])
+                    ->required()
+                    ->placeholder('Last Name')
+                    ->columnSpan([
+                        'default' => 12,
+                        'md' => 12,
+                        'lg' => 12,
+                    ]),
 
-                    Toggle::make('deleted')
-                        ->rules(['boolean'])
-                        ->required()
-                        ->default('0')
-                        ->columnSpan([
-                            'default' => 12,
-                            'md' => 12,
-                            'lg' => 12,
-                        ]),
                 ]),
             ]),
         ]);
