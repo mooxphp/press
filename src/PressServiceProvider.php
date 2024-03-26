@@ -19,6 +19,7 @@ class PressServiceProvider extends PackageServiceProvider
             ->hasConfigFile()
             ->hasViews()
             ->hasTranslations()
+            ->hasRoute('web')
             ->hasMigration('create_press_table')
             ->hasCommand(InstallCommand::class);
     }
