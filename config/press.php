@@ -1,10 +1,5 @@
 <?php
 
-$user_capabilities = [
-    'Subscriber' => 'a:1:{s:10:"subscriber";b:1;}',
-    'Administrator' => 'a:1:{s:13:"administrator";b:1;}',
-];
-
 return [
     'navigation_sort' => 1901,
 
@@ -12,23 +7,27 @@ return [
     'wordpress_slug' => env('WP_SLUG', '/wp'),
     'wordpress_prefix' => env('WP_PREFIX', 'wp_'),
 
-    /*
-    'wp_database' => [
-        'host' => env('_DB_HOST', 'localhost'),
-        'name' => env('WP_DB_NAME', 'wordpress'),
-        'user' => env('WP_DB_USER', 'root'),
-        'password' => env('WP_DB_PASSWORD', ''),
-    ],
-    */
-    $wpPrefix = env('WP_PREFIX', 'wp_'),
+    'wordpress_hash' => env('WP_HASH', 'Th1s1sN0tARealH4sh!'),
 
-    'user_meta' => [
+    'ip_whitelist' => env('IP_WHITELIST', ''),
+
+    'lock_wordpress_site' => env('LOCK_WP', false),
+    'obscure_login_from_external' => env('HIDE_LOGIN', false),
+    'enable_forgot_password' => env('FORGOT_PASSWORD', false),
+    'enable_mfa' => env('ENABLE_MFA', false),
+    'enable_registration' => env('REGISTRATION', false),
+
+    'user_capabilities' => [
+        'Subscriber' => 'a:1:{s:10:"subscriber";b:1;}',
+        'Administrator' => 'a:1:{s:13:"administrator";b:1;}',
+    ],
+
+    'default_user_meta' => [
         'nickname' => 'user_login',
         'first_name' => true,
         'rich_edit' => 'true',
-        $wpPrefix.'capabilities' => $user_capabilities['Subscriber'],
+        'capabilities' => 'Subscriber',
         'mm_sua_attachment_id' => '',
 
     ],
-
 ];
