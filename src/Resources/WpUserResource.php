@@ -6,7 +6,6 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -127,14 +126,14 @@ class WpUserResource extends Resource
                         ]),
 
                     TextInput::make('last_name')
-                    ->rules(['max:255', 'string'])
-                    ->required()
-                    ->placeholder('Last Name')
-                    ->columnSpan([
-                        'default' => 12,
-                        'md' => 12,
-                        'lg' => 12,
-                    ]),
+                        ->rules(['max:255', 'string'])
+                        ->required()
+                        ->placeholder('Last Name')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
 
                 ]),
             ]),

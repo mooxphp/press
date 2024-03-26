@@ -1,10 +1,8 @@
 <?php
 
-
-
 $user_capabilities = [
-    "Subscriber" => "a:1:{s:10:\"subscriber\";b:1;}",
-    "Administrator" => "a:1:{s:13:\"administrator\";b:1;}",
+    'Subscriber' => 'a:1:{s:10:"subscriber";b:1;}',
+    'Administrator' => 'a:1:{s:13:"administrator";b:1;}',
 ];
 
 return [
@@ -24,7 +22,6 @@ return [
     */
     $wpPrefix = env('WP_PREFIX', 'wp_'),
 
-
     'user_meta' => [
         'nickname' => 'user_login',
         'first_name' => true,
@@ -32,8 +29,6 @@ return [
         $wpPrefix.'capabilities' => $user_capabilities['Subscriber'],
         'mm_sua_attachment_id' => '',
 
-
     ],
-
 
 ];
