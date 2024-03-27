@@ -24,7 +24,7 @@ return [
 
     'default_user_meta' => [
         'nickname' => 'user_login',
-        'first_name' => true,
+        'first_name' => '',
         'rich_edit' => 'true',
         'capabilities' => 'Subscriber',
         'mm_sua_attachment_id' => '',
