@@ -4,16 +4,15 @@ return [
     'navigation_sort' => 1901,
 
     'wordpress_path' => env('WP_PATH', '/public/wp'),
-    'wordpress_slug' => env('WP_SLUG', '/wp'),
     'wordpress_prefix' => env('WP_PREFIX', 'wp_'),
-
-    'wordpress_hash' => env('WP_HASH', 'Th1s1sN0tARealH4sh!'),
+    'wordpress_slug' => env('WP_SLUG', '/wp'),
 
     'ip_whitelist' => env('IP_WHITELIST', ''),
 
     'lock_wordpress_site' => env('LOCK_WP', false),
     'obscure_login_from_external' => env('HIDE_LOGIN', false),
-    'enable_forgot_password' => env('FORGOT_PASSWORD', false),
+    'enable_honey_pot' => env('HONEY_POT', false),
+    'enable_forgot_password' => env('FORGOT_PASSWORD', true),
     'enable_mfa' => env('ENABLE_MFA', false),
     'enable_registration' => env('REGISTRATION', false),
 

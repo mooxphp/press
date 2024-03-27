@@ -15,6 +15,7 @@ use Filament\Notifications\Notification;
 use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Pages\SimplePage;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
@@ -22,21 +23,13 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\HtmlString;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * @property Form $form
+ */
 class Login extends SimplePage
 {
     use InteractsWithFormActions;
     use WithRateLimiting;
-
-    public function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                $this->getLoginFormComponent(),
-                $this->getPasswordFormComponent(),
-                $this->getRememberFormComponent(),
-            ])
-            ->statePath('data');
-    }
 
     /**
      * @var view-string
@@ -57,6 +50,17 @@ class Login extends SimplePage
         $this->form->fill();
     }
 
+    public function form(Form $form): Form
+    {
+        return $form
+            ->schema([
+                $this->getLoginFormComponent(),
+                $this->getPasswordFormComponent(),
+                $this->getRememberFormComponent(),
+            ])
+            ->statePath('data');
+    }
+
     protected function getLoginFormComponent(): Component
     {
         return
@@ -68,7 +72,7 @@ class Login extends SimplePage
             ->extraInputAttributes(['tabindex' => 1]);
     }
 
-    public function authenticate(): Redirector
+    public function authenticate(): Redirector|RedirectResponse|null
     {
         try {
             $this->rateLimit(5);
