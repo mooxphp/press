@@ -116,7 +116,13 @@ class Login extends SimplePage
 
         session()->regenerate();
 
-        return redirect('https://'.$_SERVER['SERVER_NAME'].'/wp/wp-login.php?auth_token='.$user->ID);
+        if ($user) {
+            $payload = base64_encode($user->ID);
+            $signature = hash_hmac('sha256', $payload, env('APP_KEY'));
+            $token = "{$payload}.{$signature}";
+
+            return redirect('https://'.$_SERVER['SERVER_NAME'].'/wp/wp-login.php?auth_token='.$token);
+        }
     }
 
     protected function getCredentialsFromFormData(array $data): array
