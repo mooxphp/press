@@ -106,7 +106,9 @@ class Login extends SimplePage
             $this->throwFailureValidationException();
         }
 
-        $response = Http::post('https://'.$_SERVER['SERVER_NAME'].'/wp/wp-json/custom/v1/login/', [
+        $response = Http::withOptions([
+            'verify' => app()->environment('production'),
+        ])->post('https://'.$_SERVER['SERVER_NAME'].'/wp/wp-json/custom/v1/login/', [
             'username' => $data['login'],
             'password' => $data['password'],
             'remember' => $data['remember'],
@@ -116,13 +118,11 @@ class Login extends SimplePage
 
         session()->regenerate();
 
-        if ($user) {
-            $payload = base64_encode($user->ID);
-            $signature = hash_hmac('sha256', $payload, env('APP_KEY'));
-            $token = "{$payload}.{$signature}";
+        $payload = base64_encode($user->ID);
+        $signature = hash_hmac('sha256', $payload, env('APP_KEY'));
+        $token = "{$payload}.{$signature}";
 
-            return redirect('https://'.$_SERVER['SERVER_NAME'].'/wp/wp-login.php?auth_token='.$token);
-        }
+        return redirect('https://'.$_SERVER['SERVER_NAME'].'/wp/wp-login.php?auth_token='.$token);
     }
 
     protected function getCredentialsFromFormData(array $data): array
