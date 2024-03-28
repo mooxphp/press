@@ -106,14 +106,6 @@ class Login extends SimplePage
             $this->throwFailureValidationException();
         }
 
-        $response = Http::withOptions([
-            'verify' => app()->environment('production'),
-        ])->post('https://'.$_SERVER['SERVER_NAME'].'/wp/wp-json/custom/v1/login/', [
-            'username' => $data['login'],
-            'password' => $data['password'],
-            'remember' => $data['remember'],
-        ]);
-
         Auth::login($user, $data['remember'] ?? false);
 
         session()->regenerate();
