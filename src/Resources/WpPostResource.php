@@ -12,8 +12,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\DeleteBulkAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Moox\Press\Models\WpPost;
@@ -283,93 +281,42 @@ class WpPostResource extends Resource
             ->poll('60s')
             ->columns([
                 Tables\Columns\TextColumn::make('post_author')
-                    ->toggleable()
-                    ->searchable(true, null, true)
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('post_date')
-                    ->toggleable()
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('post_date_gmt')
-                    ->toggleable()
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('post_content')
+                    ->label('Author')
                     ->toggleable()
                     ->searchable()
                     ->limit(50),
                 Tables\Columns\TextColumn::make('post_title')
-                    ->toggleable()
-                    ->searchable()
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('post_excerpt')
+                    ->label('Title')
                     ->toggleable()
                     ->searchable()
                     ->limit(50),
                 Tables\Columns\TextColumn::make('post_status')
-                    ->toggleable()
-                    ->searchable(true, null, true)
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('comment_status')
-                    ->toggleable()
-                    ->searchable(true, null, true)
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('ping_status')
-                    ->toggleable()
-                    ->searchable(true, null, true)
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('post_password')
-                    ->toggleable()
-                    ->searchable(true, null, true)
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('post_name')
-                    ->toggleable()
-                    ->searchable(true, null, true)
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('to_ping')
+                    ->label('Status')
                     ->toggleable()
                     ->searchable()
                     ->limit(50),
-                Tables\Columns\TextColumn::make('pinged')
+                Tables\Columns\TextColumn::make('post_date')
+                    ->label('Created')
                     ->toggleable()
-                    ->searchable()
-                    ->limit(50),
+                    ->dateTime(),
                 Tables\Columns\TextColumn::make('post_modified')
+                    ->label('Modified')
+                    ->sortable()
                     ->toggleable()
                     ->dateTime(),
-                Tables\Columns\TextColumn::make('post_modified_gmt')
-                    ->toggleable()
-                    ->dateTime(),
-                Tables\Columns\TextColumn::make('post_content_filtered')
+                Tables\Columns\TextColumn::make('post_parent')
+                    ->label('Parent')
                     ->toggleable()
                     ->searchable()
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('post_parent')
-                    ->toggleable()
-                    ->searchable(true, null, true)
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('guid')
-                    ->toggleable()
-                    ->searchable(true, null, true)
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('menu_order')
-                    ->toggleable()
-                    ->searchable(true, null, true),
-                Tables\Columns\TextColumn::make('post_type')
-                    ->toggleable()
-                    ->searchable(true, null, true)
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('post_mime_type')
-                    ->toggleable()
-                    ->searchable(true, null, true)
                     ->limit(50),
                 Tables\Columns\TextColumn::make('comment_count')
+                    ->label('Comments')
                     ->toggleable()
-                    ->searchable(true, null, true)
+                    ->searchable()
                     ->limit(50),
             ])
             ->actions([
-                ViewAction::make(),
-                EditAction::make(),
-                Action::make('Wp Edit')->url(fn ($record): string => "/wp/wp-admin/post.php?post={$record->ID}&action=edit"),
+                Action::make('Edit')->url(fn ($record): string => "/wp/wp-admin/post.php?post={$record->ID}&action=edit"),
             ])
             ->bulkActions([DeleteBulkAction::make()]);
     }

@@ -13,7 +13,7 @@ class WpCommentPlugin implements Plugin
 
     public function getId(): string
     {
-        return 'wp-comments';
+        return 'wp-comment';
     }
 
     public function register(Panel $panel): void

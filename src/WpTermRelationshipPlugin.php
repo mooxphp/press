@@ -13,7 +13,7 @@ class WpTermRelationshipPlugin implements Plugin
 
     public function getId(): string
     {
-        return 'wp-term_relationships';
+        return 'wp-term_relationship';
     }
 
     public function register(Panel $panel): void

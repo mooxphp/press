@@ -13,7 +13,7 @@ class WpTermPlugin implements Plugin
 
     public function getId(): string
     {
-        return 'wp-terms';
+        return 'wp-term';
     }
 
     public function register(Panel $panel): void

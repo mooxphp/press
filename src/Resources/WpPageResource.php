@@ -10,6 +10,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
@@ -380,7 +381,11 @@ class WpPageResource extends Resource
                     ->searchable(true, null, true)
                     ->limit(50),
             ])
-            ->actions([ViewAction::make(), EditAction::make()])
+            ->actions([
+                ViewAction::make(),
+                EditAction::make(),
+                Action::make('Wp Edit')->url(fn ($record): string => "/wp/wp-admin/post.php?post={$record->ID}&action=edit"),
+            ])
             ->bulkActions([DeleteBulkAction::make()]);
     }
 
