@@ -9,11 +9,6 @@ class WpCommentMeta extends Model
 {
     use HasFactory;
 
-    public function comment()
-    {
-        return $this->belongsTo(WpComment::class, 'comment_ID');
-    }
-
     protected $fillable = ['comment_id', 'meta_key', 'meta_value'];
 
     protected $searchableFields = ['*'];

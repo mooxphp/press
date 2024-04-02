@@ -34,6 +34,11 @@ class WpPost extends Model
         'comment_count',
     ];
 
+    public function comment()
+    {
+        return $this->hasMany(WpComment::class, 'comment_post_ID');
+    }
+
     protected $searchableFields = ['*'];
 
     protected $wpPrefix;
