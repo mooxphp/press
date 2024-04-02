@@ -3,6 +3,7 @@
 namespace Moox\Press\Resources\WpUserResource\Pages;
 
 use Filament\Resources\Pages\CreateRecord;
+use Moox\Press\Models\WpUser;
 use Moox\Press\Models\WpUserMeta;
 use Moox\Press\Resources\WpUserResource;
 
@@ -30,14 +31,15 @@ class CreateWpUser extends CreateRecord
 
             }
 
-            $userId = $this->record->ID;
+            if ($this->record instanceof WpUser) {
+                $userId = $this->record->ID;
 
-            WpUserMeta::create([
-                'user_id' => $userId,
-                'meta_key' => $metaKey,
-                'meta_value' => $metaValue,
-            ]);
-
+                WpUserMeta::create([
+                    'user_id' => $userId,
+                    'meta_key' => $metaKey,
+                    'meta_value' => $metaValue,
+                ]);
+            }
         }
 
     }

@@ -5,16 +5,11 @@ namespace Moox\Press\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class WpUserMeta extends Model
+class WpPostMeta extends Model
 {
     use HasFactory;
 
-    public function user()
-    {
-        return $this->belongsTo(WpUser::class, 'ID');
-    }
-
-    protected $fillable = ['user_id', 'meta_key', 'meta_value'];
+    protected $fillable = ['post_id', 'meta_key', 'meta_value'];
 
     protected $searchableFields = ['*'];
 
@@ -22,19 +17,12 @@ class WpUserMeta extends Model
 
     protected $table;
 
-    protected $primaryKey = 'umeta_id';
-
-    public $timestamps = false;
+    protected $primaryKey = 'meta_id';
 
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
         $this->wpPrefix = config('press.wordpress_prefix');
-        $this->table = $this->wpPrefix.'usermeta';
-    }
-
-    public function userMeta()
-    {
-        return $this->hasMany(WpUserMeta::class, 'user_id');
+        $this->table = $this->wpPrefix.'postmeta';
     }
 }

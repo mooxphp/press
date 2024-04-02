@@ -27,6 +27,5 @@ return [
         'rich_edit' => 'true',
         'capabilities' => 'Subscriber',
         'mm_sua_attachment_id' => '',
-
     ],
 ];

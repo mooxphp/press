@@ -18,6 +18,7 @@ use Moox\Press\Resources\WpUserResource\Pages\CreateWpUser;
 use Moox\Press\Resources\WpUserResource\Pages\EditWpUser;
 use Moox\Press\Resources\WpUserResource\Pages\ListWpUsers;
 use Moox\Press\Resources\WpUserResource\Pages\ViewWpUser;
+use Moox\Press\Resources\WpUserResource\RelationManagers\WpUserMetaRelationManager;
 
 class WpUserResource extends Resource
 {
@@ -193,7 +194,9 @@ class WpUserResource extends Resource
 
     public static function getRelations(): array
     {
-        return [];
+        return [
+            WpUserMetaRelationManager::class,
+        ];
     }
 
     public static function getPages(): array
