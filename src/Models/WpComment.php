@@ -26,12 +26,30 @@ class WpComment extends Model
         'user_id',
     ];
 
-    protected $searchableFields = ['*'];
+    public function commentMeta()
+    {
+        return $this->hasMany(WpCommentMeta::class, 'comment_id');
+    }
 
-    protected $table = 'wp_comments';
+    protected $searchableFields = ['*'];
 
     protected $casts = [
         'comment_date' => 'datetime',
         'comment_date_gmt' => 'datetime',
     ];
+
+    protected $wpPrefix;
+
+    protected $table;
+
+    protected $primaryKey = 'comment_ID';
+
+    public $timestamps = false;
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->wpPrefix = config('press.wordpress_prefix');
+        $this->table = $this->wpPrefix.'comments';
+    }
 }

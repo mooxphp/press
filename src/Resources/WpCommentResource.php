@@ -16,6 +16,7 @@ use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Table;
 use Moox\Press\Models\WpComment;
 use Moox\Press\Resources\WpCommentResource\Pages;
+use Moox\Press\Resources\WpCommentResource\RelationManagers\WpCommentMetaRelationManager;
 
 class WpCommentResource extends Resource
 {
@@ -248,7 +249,9 @@ class WpCommentResource extends Resource
 
     public static function getRelations(): array
     {
-        return [];
+        return [
+            WpCommentMetaRelationManager::class,
+        ];
     }
 
     public static function getPages(): array

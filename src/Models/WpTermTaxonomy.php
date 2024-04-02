@@ -19,5 +19,18 @@ class WpTermTaxonomy extends Model
 
     protected $searchableFields = ['*'];
 
-    protected $table = 'wp_term_taxonomy';
+    protected $wpPrefix;
+
+    protected $table;
+
+    protected $primaryKey = 'term_taxonomy_id';
+
+    public $timestamps = false;
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->wpPrefix = config('press.wordpress_prefix');
+        $this->table = $this->wpPrefix.'term_taxonomy';
+    }
 }

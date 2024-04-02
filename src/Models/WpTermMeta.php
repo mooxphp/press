@@ -13,5 +13,18 @@ class WpTermMeta extends Model
 
     protected $searchableFields = ['*'];
 
-    protected $table = 'wp_termmeta';
+    protected $wpPrefix;
+
+    protected $table;
+
+    protected $primaryKey = 'meta_id';
+
+    public $timestamps = false;
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->wpPrefix = config('press.wordpress_prefix');
+        $this->table = $this->wpPrefix.'termmeta';
+    }
 }

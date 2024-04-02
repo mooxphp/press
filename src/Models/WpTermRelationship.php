@@ -13,5 +13,18 @@ class WpTermRelationship extends Model
 
     protected $searchableFields = ['*'];
 
-    protected $table = 'wp_term_relationships';
+    protected $wpPrefix;
+
+    protected $table;
+
+    protected $primaryKey = 'object_id';
+
+    public $timestamps = false;
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->wpPrefix = config('press.wordpress_prefix');
+        $this->table = $this->wpPrefix.'term_relationships';
+    }
 }
