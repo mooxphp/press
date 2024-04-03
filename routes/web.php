@@ -6,37 +6,36 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('web')->group(function () {
 
-    // redirect_index + wordpress_slug
+    if (config('press.redirect_index') === true) {
+        Route::get('/', function () {
+            return Redirect::to('https://'.$_SERVER['SERVER_NAME'].config('press.wordpress_slug'));
+        });
+    }
 
-    Route::get('/', function () {
-        return Redirect::to('https://'.$_SERVER['SERVER_NAME'].'/wp');
-    });
+    if (config('press.redirect_logout') === true) {
+        Route::get('/moox/logout', function () {
+            Auth::logout();
+            request()->session()->invalidate();
 
-    // redirect_logout
-
-    Route::get('/moox/logout', function () {
-        Auth::logout();
-        request()->session()->invalidate();
-
-        return Redirect::to('https://'.$_SERVER['SERVER_NAME'].'/');
-    });
-
-    // enable_registration
-
-    Route::get('/register', function () {
-        if (Auth::check()) {
             return Redirect::to('https://'.$_SERVER['SERVER_NAME'].'/');
-        }
+        });
+    }
 
-        return view('filament-panels::pages.auth.register');
-    });
+    if (config('press.registration') === true) {
+        Route::get('/register', function () {
+            if (Auth::check()) {
+                return Redirect::to('https://'.$_SERVER['SERVER_NAME'].'/');
+            }
 
-    // redirect_to_wp + wordpress_slug
+            return view('filament-panels::pages.auth.register');
+        });
+    }
 
-    // Catchall route must be a the bottom of the file
-    Route::any('{any}', function ($any) {
-        if (! str_contains(request()->server()['REQUEST_URI'], '/wp/')) {
-            return redirect('/wp/'.ltrim(request()->path(), '/'));
-        }
-    })->where('any', '.*');
+    if (config('press.redirect_to_wp') === true) {
+        Route::any('{any}', function ($any) {
+            if (! str_contains(request()->server()['REQUEST_URI'], config('press.wordpress_slug').'/')) {
+                return redirect('/wp/'.ltrim(request()->path(), '/'));
+            }
+        })->where('any', '.*');
+    }
 });

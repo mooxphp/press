@@ -11,6 +11,7 @@ use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 use Filament\Notifications\Notification;
 use Filament\Pages\Concerns\InteractsWithFormActions;
 use Filament\Pages\SimplePage;
@@ -71,7 +72,7 @@ class Login extends SimplePage
             ->extraInputAttributes(['tabindex' => 1]);
     }
 
-    public function authenticate(): Redirector|RedirectResponse|null
+    public function authenticate(): Redirector|RedirectResponse|LoginResponse|null
     {
         try {
             $this->rateLimit(5);
@@ -109,11 +110,17 @@ class Login extends SimplePage
 
         session()->regenerate();
 
-        $payload = base64_encode($user->ID);
-        $signature = hash_hmac('sha256', $payload, env('APP_KEY'));
-        $token = "{$payload}.{$signature}";
+        if (config('press.auth_wordpress') === true) {
+            $payload = base64_encode($user->ID);
+            $signature = hash_hmac('sha256', $payload, env('APP_KEY'));
+            $token = "{$payload}.{$signature}";
 
-        return redirect('https://'.$_SERVER['SERVER_NAME'].'/wp/wp-login.php?auth_token='.$token);
+            return redirect('https://'.$_SERVER['SERVER_NAME'].config('press.wordpress_slug').'/wp-login.php?auth_token='.$token);
+
+        } else {
+            return app(LoginResponse::class);
+        }
+
     }
 
     protected function getCredentialsFromFormData(array $data): array
