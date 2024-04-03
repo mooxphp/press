@@ -54,19 +54,16 @@ class WpUser extends Authenticatable implements FilamentUser
         'deleted' => 'boolean',
     ];
 
-    // Accessor for "name" attribute
     public function getNameAttribute()
     {
         return $this->attributes['user_login'];
     }
 
-    // Accessor for "email" attribute
     public function getEmailAttribute()
     {
         return $this->attributes['user_email'];
     }
 
-    // Accessor for "password" attribute
     public function getPasswordAttribute()
     {
         return $this->attributes['user_pass'];

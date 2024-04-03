@@ -5,6 +5,13 @@ namespace Moox\Press\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property int $ID
+ * @property string $post_title
+ * @property string $post_name
+ * @property string $post_author
+ * @property \Illuminate\Database\Eloquent\Collection|\Moox\Press\Models\WpPostMeta[] $meta
+ */
 class WpPost extends Model
 {
     use HasFactory;
@@ -61,8 +68,13 @@ class WpPost extends Model
         'post_modified_gmt' => 'datetime',
     ];
 
-    public function postMeta()
+    public function meta()
     {
-        return $this->hasMany(WpPostMeta::class, 'post_id');
+        return $this->hasMany(WpPostMeta::class, 'post_id', 'ID');
+    }
+
+    public function author()
+    {
+        return $this->belongsTo(WpUser::class, 'post_author', 'ID');
     }
 }

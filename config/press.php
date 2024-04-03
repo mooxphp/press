@@ -9,12 +9,17 @@ return [
 
     'ip_whitelist' => env('IP_WHITELIST', ''),
 
-    'lock_wordpress_site' => env('LOCK_WP', false),
-    'obscure_login_from_external' => env('HIDE_LOGIN', false),
-    'enable_honey_pot' => env('HONEY_POT', false),
+    'lock_wordpress' => env('LOCK_WP', false),
+    'auth_wordpress' => env('AUTH_WP', false),
+    'redirect_index' => env('REDIRECT_INDEX', false),
+    'redirect_to_wp' => env('REDIRECT_TO_WP', false),
+    'redirect_login' => env('REDIRECT_LOGIN', false),
+    'redirect_logout' => env('REDIRECT_LOGOUT', false),
+    'redirect_editor' => env('REDIRECT_EDITOR', false),
+
     'enable_forgot_password' => env('FORGOT_PASSWORD', true),
-    'enable_mfa' => env('ENABLE_MFA', false),
     'enable_registration' => env('REGISTRATION', false),
+    'enable_mfa' => env('ENABLE_MFA', false),
 
     'user_capabilities' => [
         'Subscriber' => 'a:1:{s:10:"subscriber";b:1;}',
