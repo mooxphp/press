@@ -14,7 +14,7 @@ Route::middleware('web')->group(function () {
 
     // redirect_logout
 
-    Route::get('/admin/logout', function () {
+    Route::get('/moox/logout', function () {
         Auth::logout();
         request()->session()->invalidate();
 
