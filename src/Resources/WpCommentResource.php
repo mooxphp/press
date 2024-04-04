@@ -26,6 +26,23 @@ class WpCommentResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'comment_author';
 
+    public static function getModelLabel(): string
+    {
+        return 'Comment';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Comments';
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return 'Comments';
+    }
+
+    protected static ?string $navigationGroup = 'Moox Press';
+
     public static function form(Form $form): Form
     {
         return $form->schema([

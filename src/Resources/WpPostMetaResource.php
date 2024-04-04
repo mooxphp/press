@@ -24,6 +24,8 @@ class WpPostMetaResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'meta_key';
 
+    protected static ?string $navigationGroup = 'Moox Press Meta';
+
     public static function form(Form $form): Form
     {
         return $form->schema([

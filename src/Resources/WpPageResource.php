@@ -28,19 +28,21 @@ class WpPageResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'post_title';
 
+    protected static ?string $navigationGroup = 'Moox Press';
+
     public static function getModelLabel(): string
     {
-        return 'Wp Pages';
+        return 'Page';
     }
 
     public static function getPluralModelLabel(): string
     {
-        return 'Wp Pages';
+        return 'Pages';
     }
 
     public static function getNavigationLabel(): string
     {
-        return 'Wp Pages';
+        return 'Pages';
     }
 
     public static function getEloquentQuery(): Builder

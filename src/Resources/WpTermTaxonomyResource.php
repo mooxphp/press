@@ -24,6 +24,8 @@ class WpTermTaxonomyResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'taxonomy';
 
+    protected static ?string $navigationGroup = 'Moox Press Meta';
+
     public static function form(Form $form): Form
     {
         return $form->schema([

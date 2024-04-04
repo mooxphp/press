@@ -28,6 +28,23 @@ class WpUserResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'user_login';
 
+    public static function getModelLabel(): string
+    {
+        return 'User';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Users';
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return 'Users';
+    }
+
+    protected static ?string $navigationGroup = 'Moox Press Admin';
+
     public static function form(Form $form): Form
     {
         return $form->schema([

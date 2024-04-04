@@ -27,4 +27,9 @@ class WpTerm extends Model
         $this->wpPrefix = config('press.wordpress_prefix');
         $this->table = $this->wpPrefix.'terms';
     }
+
+    public function termTaxonomies()
+    {
+        return $this->hasMany(WpTermTaxonomy::class, 'term_id', 'term_id');
+    }
 }

@@ -23,6 +23,8 @@ class WpTermRelationshipResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'object_id';
 
+    protected static ?string $navigationGroup = 'Moox Press Meta';
+
     public static function form(Form $form): Form
     {
         return $form->schema([

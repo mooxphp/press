@@ -9,6 +9,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Moox\Press\Database\Factories\WpUserFactory;
 
+/**
+ * @property int $ID
+ * @property string $user_login
+ * @property string $user_nicename
+ * @property string $user_email
+ */
 class WpUser extends Authenticatable implements FilamentUser
 {
     use HasFactory;

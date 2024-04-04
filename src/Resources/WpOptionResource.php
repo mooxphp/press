@@ -24,6 +24,23 @@ class WpOptionResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'option_name';
 
+    public static function getModelLabel(): string
+    {
+        return 'Option';
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return 'Options';
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return 'Options';
+    }
+
+    protected static ?string $navigationGroup = 'Moox Press Admin';
+
     public static function form(Form $form): Form
     {
         return $form->schema([

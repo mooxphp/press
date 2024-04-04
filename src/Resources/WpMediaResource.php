@@ -29,18 +29,20 @@ class WpMediaResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return 'Wp Media';
+        return 'Media';
     }
 
     public static function getPluralModelLabel(): string
     {
-        return 'Wp Media';
+        return 'Media';
     }
 
     public static function getNavigationLabel(): string
     {
-        return 'Wp Media';
+        return 'Media';
     }
+
+    protected static ?string $navigationGroup = 'Moox Press';
 
     public static function getEloquentQuery(): Builder
     {
