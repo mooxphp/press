@@ -26,7 +26,7 @@ class WpTagResource extends Resource
 
     public static function getModelLabel(): string
     {
-        return 'Tags';
+        return 'Tag';
     }
 
     public static function getPluralModelLabel(): string
