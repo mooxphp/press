@@ -25,6 +25,7 @@ class WpUserFactory extends Factory
         $hasher = new PasswordHash(8, true);
 
         return [
+            'ID' => $this->faker->unique()->numberBetween(1, 10000),
             'user_login' => fake()->userName(),
             'user_pass' => $hasher->HashPassword($this->generatePassword()),
             'user_nicename' => fake()->userName(),
