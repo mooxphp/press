@@ -21,7 +21,6 @@ class PressServiceProvider extends PackageServiceProvider
             ->hasViews()
             ->hasTranslations()
             ->hasRoute('web')
-            ->hasMigration('create_press_table')
             ->hasCommands(InstallCommand::class, UpdateWordPressURL::class);
     }
 

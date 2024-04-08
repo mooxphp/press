@@ -37,8 +37,8 @@ class InstallCommand extends Command
         $this->art();
         $this->welcome();
         $this->publishConfiguration();
-        $this->publishMigrations();
-        $this->runMigrations();
+        //$this->publishMigrations();
+        //$this->runMigrations();
         $this->registerPlugins();
         $this->finish();
     }
@@ -116,8 +116,8 @@ class InstallCommand extends Command
 
             $pluginsToAdd = multiselect(
                 label: 'These plugins will be installed:',
-                options: ['PressPlugin'],
-                default: ['PressPlugin'],
+                options: ['WpPostPlugin', 'WpPagePlugin', 'WpMediaPlugin', 'WpCategoryPlugin', 'WpTagPlugin', 'WpUserPlugin', 'WpOptionPlugin'],
+                default: ['WpPostPlugin', 'WpPagePlugin', 'WpMediaPlugin', 'WpCategoryPlugin', 'WpTagPlugin', 'WpUserPlugin', 'WpOptionPlugin'],
             );
 
             $function = '::make(),';
