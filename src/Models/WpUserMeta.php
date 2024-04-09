@@ -9,11 +9,6 @@ class WpUserMeta extends Model
 {
     use HasFactory;
 
-    public function user()
-    {
-        return $this->belongsTo(WpUser::class, 'ID');
-    }
-
     protected $fillable = ['user_id', 'meta_key', 'meta_value'];
 
     protected $searchableFields = ['*'];
@@ -33,8 +28,8 @@ class WpUserMeta extends Model
         $this->table = $this->wpPrefix.'usermeta';
     }
 
-    public function userMeta()
+    public function user()
     {
-        return $this->hasMany(WpUserMeta::class, 'user_id');
+        return $this->belongsTo(WpUser::class, 'ID');
     }
 }
