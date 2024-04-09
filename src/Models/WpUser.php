@@ -59,11 +59,11 @@ class WpUser extends Authenticatable implements FilamentUser
     {
         parent::boot();
 
-        static::creating(function ($model) {
+        static::created(function ($model) {
             $model->addOrUpdateMeta('created_at', now()->toDateTimeString());
         });
 
-        static::updating(function ($model) {
+        static::updated(function ($model) {
             $model->addOrUpdateMeta('updated_at', now()->toDateTimeString());
         });
     }
