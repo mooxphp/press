@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Moox\Press\Database\Factories\WpUserFactory;
 
 /**
@@ -47,12 +48,32 @@ class WpUser extends Authenticatable implements FilamentUser
 
     public $timestamps = false;
 
+    protected $appends;
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
         $this->wpPrefix = config('press.wordpress_prefix');
         $this->table = $this->wpPrefix.'users';
         $this->metatable = $this->wpPrefix.'usermeta';
+
+        $this->appends = [
+            'id',
+            'name',
+            'email',
+            'password',
+            'nickname',
+            'first_name',
+            'last_name',
+            'description',
+            'created_at',
+            'updated_at',
+            'session_tokens',
+            'remember_token',
+            'email_verified_at',
+            'mm_sua_attachment_id',
+            'moox_user_attachment_id',
+        ];
     }
 
     protected static function boot()
@@ -74,10 +95,6 @@ class WpUser extends Authenticatable implements FilamentUser
         'deleted' => 'boolean',
     ];
 
-    protected $appends = [
-        'id', 'name', 'email', 'password', 'remember_token', 'email_verified_at', 'created_at', 'updated_at',
-    ];
-
     public function getIdAttribute()
     {
         return $this->attributes['ID'];
@@ -88,14 +105,79 @@ class WpUser extends Authenticatable implements FilamentUser
         return $this->attributes['user_login'];
     }
 
+    public function setNameAttribute($value)
+    {
+        $this->attributes['user_login'] = $value;
+    }
+
     public function getEmailAttribute()
     {
         return $this->attributes['user_email'];
     }
 
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['user_email'] = $value;
+    }
+
     public function getPasswordAttribute()
     {
         return $this->attributes['user_pass'];
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['user_pass'] = $value;
+    }
+
+    public function getNicknameAttribute()
+    {
+        return $this->getMeta('nickname');
+    }
+
+    public function setNicknameAttribute($value)
+    {
+        $this->addOrUpdateMeta('nickname', $value);
+    }
+
+    public function getFirstNameAttribute()
+    {
+        return $this->getMeta('first_name');
+    }
+
+    public function setFirstNameAttribute($value)
+    {
+        $this->addOrUpdateMeta('first_name', $value);
+    }
+
+    public function getLastNameAttribute()
+    {
+        return $this->getMeta('last_name');
+    }
+
+    public function setLastNameAttribute($value)
+    {
+        $this->addOrUpdateMeta('last_name', $value);
+    }
+
+    public function getDescriptionAttribute()
+    {
+        return $this->getMeta('description');
+    }
+
+    public function setDescriptionAttribute($value)
+    {
+        $this->addOrUpdateMeta('description', $value);
+    }
+
+    public function getSessionTokensAttribute()
+    {
+        return $this->getMeta('session_tokens');
+    }
+
+    public function setSessionTokenAttribute($value)
+    {
+        $this->addOrUpdateMeta('session_tokens', $value);
     }
 
     public function getRememberTokenAttribute()
@@ -123,9 +205,39 @@ class WpUser extends Authenticatable implements FilamentUser
         return $this->getMeta('created_at');
     }
 
+    public function setCreatedAtAttribute($value)
+    {
+        $this->addOrUpdateMeta('created_at', $value);
+    }
+
     public function getUpdatedAtAttribute()
     {
         return $this->getMeta('updated_at');
+    }
+
+    public function setUpdatedAtAttribute($value)
+    {
+        $this->addOrUpdateMeta('updated_at', $value);
+    }
+
+    public function getMmSuaAttachmentIdAttribute()
+    {
+        return $this->getMeta('mm_sua_attachment_id');
+    }
+
+    public function setMmSuaAttachmentIdAttribute($value)
+    {
+        $this->addOrUpdateMeta('mm_sua_attachment_id', $value);
+    }
+
+    public function getMooxUserAttachmentIdAttribute()
+    {
+        return $this->getMeta('moox_user_attachment_id');
+    }
+
+    public function setMooxUserAttachmentIdAttribute($value)
+    {
+        $this->addOrUpdateMeta('moox_user_attachment_id', $value);
     }
 
     protected static function newFactory(): Factory
@@ -140,15 +252,23 @@ class WpUser extends Authenticatable implements FilamentUser
 
     public function userMeta()
     {
-        return $this->hasMany(WpUserMeta::class, 'user_id');
+        return $this->hasMany(WpUserMeta::class, 'user_id', 'ID');
+    }
+
+    public function meta($key)
+    {
+        if (! Str::startsWith($key, $this->wpPrefix)) {
+            $key = "{$this->wpPrefix}{$key}";
+        }
+
+        return $this->getMeta($key);
     }
 
     protected function getMeta($key)
     {
-        return DB::table($this->metatable)
-            ->where('user_id', $this->ID)
-            ->where('meta_key', $key)
-            ->value('meta_value');
+        $meta = $this->userMeta()->where('meta_key', $key)->first();
+
+        return $meta ? $meta->meta_value : null;
     }
 
     protected function addOrUpdateMeta($key, $value)
