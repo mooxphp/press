@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Moox\Press\Database\Factories\WpUserFactory;
 
@@ -273,23 +272,16 @@ class WpUser extends Authenticatable implements FilamentUser
 
     protected function addOrUpdateMeta($key, $value)
     {
-        $exists = DB::table($this->metatable)
-            ->where('user_id', $this->ID)
-            ->where('meta_key', $key)
-            ->exists();
+        $meta = $this->userMeta()->where('meta_key', $key)->first();
 
-        if ($exists) {
-            DB::table($this->metatable)
-                ->where('user_id', $this->ID)
-                ->where('meta_key', $key)
-                ->update(['meta_value' => $value]);
+        if ($meta) {
+            $meta->meta_value = $value;
+            $meta->save();
         } else {
-            DB::table($this->metatable)
-                ->insert([
-                    'user_id' => $this->ID,
-                    'meta_key' => $key,
-                    'meta_value' => $value,
-                ]);
+            $this->userMeta()->create([
+                'meta_key' => $key,
+                'meta_value' => $value,
+            ]);
         }
     }
 }
