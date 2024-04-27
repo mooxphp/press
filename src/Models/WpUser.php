@@ -86,9 +86,13 @@ class WpUser extends Authenticatable implements FilamentUser
 
         static::addGlobalScope('addAttributes', function (Builder $builder) {
             $builder->addSelect([
+                'ID',
                 'ID as id',
+                'user_login',
                 'user_login as name',
+                'user_email',
                 'user_email as email',
+                'user_pass',
                 'user_pass as password',
             ]);
         });
