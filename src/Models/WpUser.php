@@ -4,6 +4,7 @@ namespace Moox\Press\Models;
 
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -57,10 +58,6 @@ class WpUser extends Authenticatable implements FilamentUser
         $this->metatable = $this->wpPrefix.'usermeta';
 
         $this->appends = [
-            'id',
-            'name',
-            'email',
-            'password',
             'nickname',
             'first_name',
             'last_name',
@@ -86,6 +83,15 @@ class WpUser extends Authenticatable implements FilamentUser
         static::updated(function ($model) {
             $model->addOrUpdateMeta('updated_at', now()->toDateTimeString());
         });
+
+        static::addGlobalScope('addAttributes', function (Builder $builder) {
+            $builder->addSelect([
+                'ID as id',
+                'user_login as name',
+                'user_email as email',
+                'user_pass as password',
+            ]);
+        });
     }
 
     protected $casts = [
@@ -94,44 +100,9 @@ class WpUser extends Authenticatable implements FilamentUser
         'deleted' => 'boolean',
     ];
 
-    public function getIdAttribute()
-    {
-        return $this->attributes['ID'];
-    }
-
-    public function getNameAttribute()
-    {
-        return $this->attributes['user_login'];
-    }
-
-    public function setNameAttribute($value)
-    {
-        $this->attributes['user_login'] = $value;
-    }
-
-    public function getEmailAttribute()
-    {
-        return $this->attributes['user_email'];
-    }
-
-    public function setEmailAttribute($value)
-    {
-        $this->attributes['user_email'] = $value;
-    }
-
-    public function getPasswordAttribute()
-    {
-        return $this->attributes['user_pass'];
-    }
-
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['user_pass'] = $value;
-    }
-
     public function getNicknameAttribute()
     {
-        return $this->getMeta('nickname');
+        return $this->getMeta('nickname') ?? null;
     }
 
     public function setNicknameAttribute($value)
@@ -141,7 +112,7 @@ class WpUser extends Authenticatable implements FilamentUser
 
     public function getFirstNameAttribute()
     {
-        return $this->getMeta('first_name');
+        return $this->getMeta('first_name') ?? null;
     }
 
     public function setFirstNameAttribute($value)
@@ -151,7 +122,7 @@ class WpUser extends Authenticatable implements FilamentUser
 
     public function getLastNameAttribute()
     {
-        return $this->getMeta('last_name');
+        return $this->getMeta('last_name') ?? null;
     }
 
     public function setLastNameAttribute($value)
@@ -161,7 +132,7 @@ class WpUser extends Authenticatable implements FilamentUser
 
     public function getDescriptionAttribute()
     {
-        return $this->getMeta('description');
+        return $this->getMeta('description') ?? null;
     }
 
     public function setDescriptionAttribute($value)
@@ -171,7 +142,7 @@ class WpUser extends Authenticatable implements FilamentUser
 
     public function getSessionTokensAttribute()
     {
-        return $this->getMeta('session_tokens');
+        return $this->getMeta('session_tokens') ?? null;
     }
 
     public function setSessionTokenAttribute($value)
@@ -181,7 +152,7 @@ class WpUser extends Authenticatable implements FilamentUser
 
     public function getRememberTokenAttribute()
     {
-        return $this->getMeta('remember_token');
+        return $this->getMeta('remember_token') ?? null;
     }
 
     public function setRememberTokenAttribute($value)
@@ -191,7 +162,7 @@ class WpUser extends Authenticatable implements FilamentUser
 
     public function getEmailVerifiedAtAttribute()
     {
-        return $this->getMeta('email_verified_at');
+        return $this->getMeta('email_verified_at') ?? null;
     }
 
     public function setEmailVerifiedAtAttribute($value)
@@ -201,7 +172,7 @@ class WpUser extends Authenticatable implements FilamentUser
 
     public function getCreatedAtAttribute()
     {
-        return $this->getMeta('created_at');
+        return $this->getMeta('created_at') ?? null;
     }
 
     public function setCreatedAtAttribute($value)
@@ -211,7 +182,7 @@ class WpUser extends Authenticatable implements FilamentUser
 
     public function getUpdatedAtAttribute()
     {
-        return $this->getMeta('updated_at');
+        return $this->getMeta('updated_at') ?? null;
     }
 
     public function setUpdatedAtAttribute($value)
@@ -221,7 +192,7 @@ class WpUser extends Authenticatable implements FilamentUser
 
     public function getMmSuaAttachmentIdAttribute()
     {
-        return $this->getMeta('mm_sua_attachment_id');
+        return $this->getMeta('mm_sua_attachment_id') ?? null;
     }
 
     public function setMmSuaAttachmentIdAttribute($value)
@@ -231,7 +202,7 @@ class WpUser extends Authenticatable implements FilamentUser
 
     public function getMooxUserAttachmentIdAttribute()
     {
-        return $this->getMeta('moox_user_attachment_id');
+        return $this->getMeta('moox_user_attachment_id') ?? null;
     }
 
     public function setMooxUserAttachmentIdAttribute($value)
