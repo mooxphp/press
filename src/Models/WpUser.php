@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Moox\Press\Database\Factories\WpUserFactory;
+use Moox\Press\QueryBuilder\UserQueryBuilder;
 
 /**
  * @property int $ID
@@ -96,6 +97,15 @@ class WpUser extends Authenticatable implements FilamentUser
                 'user_pass as password',
             ]);
         });
+    }
+
+    protected function newBaseQueryBuilder()
+    {
+        $connection = $this->getConnection();
+        $grammar = $connection->getQueryGrammar();
+        $processor = $connection->getPostProcessor();
+
+        return new UserQueryBuilder($connection, $grammar, $processor);
     }
 
     protected $casts = [
