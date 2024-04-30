@@ -34,7 +34,6 @@ class WpUser extends Authenticatable implements FilamentUser
         'user_activation_key',
         'user_status',
         'display_name',
-
     ];
 
     protected $searchableFields = ['*'];
