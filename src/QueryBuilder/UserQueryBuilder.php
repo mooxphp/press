@@ -21,4 +21,13 @@ class UserQueryBuilder extends Builder
 
         return parent::where($column, $operator, $value, $boolean);
     }
+
+    public function orderBy($column, $direction = 'asc')
+    {
+        if (is_string($column) && array_key_exists($column, $this->aliasMap)) {
+            $column = $this->aliasMap[$column];
+        }
+
+        return parent::orderBy($column, $direction);
+    }
 }
