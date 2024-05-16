@@ -102,6 +102,36 @@ class WpPost extends Model
         $this->addOrUpdateMeta('verantwortlicher', $value);
     }
 
+    public function getGultigBisAttribute()
+    {
+        return $this->getMeta('gultig_bis') ?? null;
+    }
+
+    public function setGultigBisAttribute($value)
+    {
+        $this->addOrUpdateMeta('gultig_bis', $value);
+    }
+
+    public function getTurnusAttribute()
+    {
+        return $this->getMeta('turnus') ?? null;
+    }
+
+    public function setTurnusAttribute($value)
+    {
+        $this->addOrUpdateMeta('turnus', $value);
+    }
+
+    public function getFruhwarnungAttribute()
+    {
+        return $this->getMeta('fruhwarnung') ?? null;
+    }
+
+    public function setFruhwarnungAttribute($value)
+    {
+        $this->addOrUpdateMeta('fruhwarnung', $value);
+    }
+
     public function postMeta()
     {
         return $this->hasMany(WpPostMeta::class, 'post_id', 'ID');
