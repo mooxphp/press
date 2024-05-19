@@ -94,6 +94,8 @@ class WpUser extends Authenticatable implements FilamentUser
                 'user_email as email',
                 'user_pass',
                 'user_pass as password',
+                'display_name',
+                'display_name as displayname'
             ]);
         });
     }
