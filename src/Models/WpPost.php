@@ -69,7 +69,6 @@ class WpPost extends Model
         $this->metatable = $this->wpPrefix.'postmeta';
 
         $this->appends = [
-            'wichtig',
             'verantwortlicher',
             'gultig_bis',
             'turnus',
@@ -82,15 +81,7 @@ class WpPost extends Model
         'post_date_gmt' => 'datetime',
         'post_modified' => 'datetime',
         'post_modified_gmt' => 'datetime',
-        'wichtig' => 'boolean',
     ];
-
-    public function scopeWichtig($query)
-    {
-        return $query->whereHas('meta', function ($query) {
-            $query->where('meta_key', 'wichtig');
-        });
-    }
 
     public function getVerantwortlicherAttribute()
     {
@@ -176,5 +167,20 @@ class WpPost extends Model
     public function author()
     {
         return $this->belongsTo(WpUser::class, 'post_author', 'ID');
+    }
+
+    public function taxonomies()
+    {
+        return $this->belongsToMany(WpTermTaxonomy::class, config('press.wordpress_prefix').'term_relationships', 'object_id', 'term_taxonomy_id');
+    }
+
+    public function categories()
+    {
+        return $this->taxonomies()->where('taxonomy', 'category');
+    }
+
+    public function tags()
+    {
+        return $this->taxonomies()->where('taxonomy', 'post_tag');
     }
 }
