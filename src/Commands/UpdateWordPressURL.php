@@ -42,9 +42,14 @@ class UpdateWordPressURL extends Command
                 $columns = DB::getSchemaBuilder()->getColumnListing($tableName);
 
                 foreach ($columns as $column) {
-                    DB::table($tableName)->where($column, 'like', "%$oldUrl%")->update([
-                        $column => DB::raw("REPLACE($column, '$oldUrl', '$newUrl')"),
-                    ]);
+                    DB::table($tableName)
+                        ->where($column, 'like', "%$oldUrl%")
+                        // TODO: Test and improve this query
+                        // https://stackoverflow.com/questions/52229588/laravel-eloquent-how-to-query-not-like
+                        ->where($column, 'not like', "%$newUrl%")
+                        ->update([
+                            $column => DB::raw("REPLACE($column, '$oldUrl', '$newUrl')"),
+                        ]);
                 }
             }
         }
