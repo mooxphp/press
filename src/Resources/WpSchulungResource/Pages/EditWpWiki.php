@@ -2,16 +2,16 @@
 
 namespace Moox\Press\Resources\WpWikiResource\Pages;
 
-use Filament\Actions\Action;
-use Filament\Resources\Pages\ListRecords;
+use Filament\Actions\DeleteAction;
+use Filament\Resources\Pages\EditRecord;
 use Moox\Press\Resources\WpWikiResource;
 
-class ListWpWikis extends ListRecords
+class EditWpWiki extends EditRecord
 {
     protected static string $resource = WpWikiResource::class;
 
     protected function getHeaderActions(): array
     {
-        return [Action::make('new-post')->label('New Post')->url('/wp/wp-admin/post-new.php?post_type=wiki')];
+        return [DeleteAction::make()];
     }
 }
