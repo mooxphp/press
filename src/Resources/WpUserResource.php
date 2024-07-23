@@ -14,13 +14,13 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Table;
 use Illuminate\Validation\Rules\Password;
-use Moox\Press\Helper\PasswordHash;
 use Moox\Press\Models\WpUser;
 use Moox\Press\Resources\WpUserResource\Pages\CreateWpUser;
 use Moox\Press\Resources\WpUserResource\Pages\EditWpUser;
 use Moox\Press\Resources\WpUserResource\Pages\ListWpUsers;
 use Moox\Press\Resources\WpUserResource\Pages\ViewWpUser;
 use Moox\Press\Resources\WpUserResource\RelationManagers\WpUserMetaRelationManager;
+use Moox\Security\Helper\PasswordHash;
 
 class WpUserResource extends Resource
 {

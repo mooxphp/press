@@ -114,6 +114,46 @@ class WpUser extends Authenticatable implements FilamentUser
         'deleted' => 'boolean',
     ];
 
+    public function getEmailAttribute()
+    {
+        return $this->attributes['user_email'] ?? null;
+    }
+
+    public function setEmailAttribute($value)
+    {
+        $this->addOrUpdateMeta('user_email', $value);
+    }
+
+    public function getNameAttribute()
+    {
+        return $this->attributes['user_login'] ?? null;
+    }
+
+    public function setNameAttribute($value)
+    {
+        $this->addOrUpdateMeta('user_login', $value);
+    }
+
+    public function getPasswordAttribute()
+    {
+        return $this->attributes['user_pass'] ?? null;
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->addOrUpdateMeta('user_pass', $value);
+    }
+
+    public function getDisplayNameAttribute()
+    {
+        return $this->attributes['display_name'] ?? null;
+    }
+
+    public function setDisplayNameAttribute($value)
+    {
+        $this->addOrUpdateMeta('display_name', $value);
+    }
+
     public function getNicknameAttribute()
     {
         return $this->getMeta('nickname') ?? null;

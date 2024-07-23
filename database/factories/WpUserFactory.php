@@ -3,8 +3,8 @@
 namespace Moox\Press\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Moox\Press\Helper\PasswordHash;
 use Moox\Press\Models\WpUser;
+use Moox\Security\Helper\PasswordHash;
 
 class WpUserFactory extends Factory
 {
