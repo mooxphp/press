@@ -39,16 +39,7 @@ class InstallCommand extends Command
         $this->publishConfiguration();
         //$this->publishMigrations();
         //$this->runMigrations();
-        $providerPath = app_path('Providers\Filament');
-        $panelsToregister = $this->getPanelProviderPath();
-        if (count($panelsToregister) > 0 && $panelsToregister != null) {
-            foreach ($panelsToregister as $panelprovider) {
-                $this->registerPlugins($providerPath.'/'.$panelprovider);
-            }
-        } else {
-            $this->registerPlugins($panelsToregister[0]);
-        }
-
+        $this->registerPlugins();
         $this->finish();
     }
 
@@ -111,8 +102,10 @@ class InstallCommand extends Command
         }
     }
 
-    public function registerPlugins(string $providerPath): void
+    public function registerPlugins(): void
     {
+
+        $providerPath = app_path('Providers/Filament/AdminPanelProvider.php');
 
         if (File::exists($providerPath)) {
             $content = File::get($providerPath);
@@ -159,32 +152,8 @@ class InstallCommand extends Command
                 File::put($providerPath, $newContent);
             }
         } else {
-            alert($providerPath.' not found. You need to add the plugins manually.');
+            alert('AdminPanelProvider not found. You need to add the plugins manually.');
         }
-    }
-
-    public function getPanelProviderPath(): string|array
-    {
-        $providerPath = app_path('Providers\Filament');
-        $providers = File::allFiles($providerPath);
-        if (count($providers) > 1) {
-            $providerNames = [];
-            foreach ($providers as $provider) {
-                $providerNames[] = $provider->getBasename();
-            }
-            $providerPath = multiselect(
-                label: 'Which Panel should it be registered',
-                options: [...$providerNames],
-                default: [$providerNames[0]],
-            );
-
-        }
-        if (count($providers) == 1) {
-            $providerPath .= '/'.$providers[0]->getBasename();
-        }
-
-        return $providerPath;
-
     }
 
     public function finish(): void
