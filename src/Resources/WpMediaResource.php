@@ -13,15 +13,15 @@ use Filament\Tables;
 use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Moox\Press\Models\WpPost;
+use Moox\Press\Models\WpMedia;
 use Moox\Press\Resources\WpMediaResource\Pages;
 use Moox\Press\Resources\WpMediaResource\RelationManagers\WpPostMetaRelationManager;
 
 class WpMediaResource extends Resource
 {
-    protected static ?string $model = WpPost::class;
+    protected static ?string $model = WpMedia::class;
 
     protected static ?string $navigationIcon = 'gmdi-image';
 
@@ -43,12 +43,6 @@ class WpMediaResource extends Resource
     }
 
     protected static ?string $navigationGroup = 'Moox Press';
-
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->where('post_type', 'attachment');
-    }
 
     public static function form(Form $form): Form
     {
@@ -297,9 +291,15 @@ class WpMediaResource extends Resource
         return $table
             ->poll('60s')
             ->columns([
+                ImageColumn::make('asset')
+                    ->label('Thumbnail')
+                    ->square()
+                    ->width(50)
+                    ->height(50)
+                    ->url(fn ($record) => $record->getAssetAttribute()),
                 Tables\Columns\TextColumn::make('post_author')
                     ->toggleable()
-                    ->searchable(true, null, true)
+                    ->searchable()
                     ->limit(50),
                 Tables\Columns\TextColumn::make('post_date')
                     ->toggleable()
@@ -321,29 +321,9 @@ class WpMediaResource extends Resource
                     ->limit(50),
                 Tables\Columns\TextColumn::make('post_status')
                     ->toggleable()
-                    ->searchable(true, null, true)
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('comment_status')
-                    ->toggleable()
-                    ->searchable(true, null, true)
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('ping_status')
-                    ->toggleable()
-                    ->searchable(true, null, true)
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('post_password')
-                    ->toggleable()
-                    ->searchable(true, null, true)
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('post_name')
-                    ->toggleable()
-                    ->searchable(true, null, true)
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('to_ping')
-                    ->toggleable()
                     ->searchable()
                     ->limit(50),
-                Tables\Columns\TextColumn::make('pinged')
+                Tables\Columns\TextColumn::make('post_name')
                     ->toggleable()
                     ->searchable()
                     ->limit(50),
@@ -357,28 +337,9 @@ class WpMediaResource extends Resource
                     ->toggleable()
                     ->searchable()
                     ->limit(50),
-                Tables\Columns\TextColumn::make('post_parent')
-                    ->toggleable()
-                    ->searchable(true, null, true)
-                    ->limit(50),
                 Tables\Columns\TextColumn::make('guid')
                     ->toggleable()
-                    ->searchable(true, null, true)
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('menu_order')
-                    ->toggleable()
-                    ->searchable(true, null, true),
-                Tables\Columns\TextColumn::make('post_type')
-                    ->toggleable()
-                    ->searchable(true, null, true)
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('post_mime_type')
-                    ->toggleable()
-                    ->searchable(true, null, true)
-                    ->limit(50),
-                Tables\Columns\TextColumn::make('comment_count')
-                    ->toggleable()
-                    ->searchable(true, null, true)
+                    ->searchable()
                     ->limit(50),
             ])
             ->actions([ViewAction::make(), EditAction::make()])

@@ -4,6 +4,8 @@ namespace Moox\Press\Resources;
 
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,6 +14,7 @@ use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Moox\Press\Models\WpTerm;
 use Moox\Press\Resources\WpTermResource\Pages;
 
@@ -25,6 +28,11 @@ class WpTermResource extends Resource
 
     protected static ?string $navigationGroup = 'Moox Press Meta';
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with('termTaxonomy');
+    }
+
     public static function form(Form $form): Form
     {
         return $form->schema([
@@ -33,7 +41,6 @@ class WpTermResource extends Resource
                     TextInput::make('name')
                         ->rules(['max:200', 'string'])
                         ->required()
-                        ->placeholder('Name')
                         ->columnSpan([
                             'default' => 12,
                             'md' => 12,
@@ -43,7 +50,22 @@ class WpTermResource extends Resource
                     TextInput::make('slug')
                         ->rules(['max:200', 'string'])
                         ->required()
-                        ->placeholder('Slug')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    Textarea::make('description')
+                        ->rules(['string'])
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    Select::make('parent')
+                        ->options(fn () => WpTerm::pluck('name', 'term_id'))
                         ->columnSpan([
                             'default' => 12,
                             'md' => 12,
@@ -53,7 +75,17 @@ class WpTermResource extends Resource
                     TextInput::make('term_group')
                         ->rules(['max:255'])
                         ->required()
-                        ->placeholder('Term Group')
+                        ->default('0')
+                        ->columnSpan([
+                            'default' => 12,
+                            'md' => 12,
+                            'lg' => 12,
+                        ]),
+
+                    TextInput::make('count')
+                        ->rules(['max:20'])
+                        ->required()
+                        ->readonly()
                         ->default('0')
                         ->columnSpan([
                             'default' => 12,
@@ -72,16 +104,22 @@ class WpTermResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->toggleable()
-                    ->searchable(true, null, true)
+                    ->searchable()
                     ->limit(50),
                 Tables\Columns\TextColumn::make('slug')
                     ->toggleable()
-                    ->searchable(true, null, true)
+                    ->searchable()
                     ->limit(50),
-                Tables\Columns\TextColumn::make('term_group')
+                Tables\Columns\TextColumn::make('description')
                     ->toggleable()
-                    ->searchable(true, null, true)
+                    ->searchable()
                     ->limit(50),
+                Tables\Columns\TextColumn::make('parent')
+                    ->toggleable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('count')
+                    ->toggleable()
+                    ->searchable(),
             ])
             ->actions([ViewAction::make(), EditAction::make()])
             ->bulkActions([DeleteBulkAction::make()]);
