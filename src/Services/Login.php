@@ -174,6 +174,7 @@ class Login extends SimplePage
             } else {
                 return redirect('https://'.$_SERVER['SERVER_NAME'].config('press.wordpress_slug').'/wp-login.php?auth_token='.$token.$redirectParam);
             }
+
         } else {
             return app(LoginResponse::class);
         }
@@ -281,6 +282,7 @@ class Login extends SimplePage
         $ipWhiteList = config('press.ip_whitelist');
 
         if (isset($ipWhiteList) && ! empty($ipWhiteList)) {
+
             if (is_array($ipWhiteList) && in_array($ipAddress, $ipWhiteList)) {
                 return true;
             }
