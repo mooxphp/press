@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "moox/core": "^2.1.6",
+        "moox/core": "^2.1.7",
         "awobaz/eloquent-mutators": "^1.0"
     },
     "autoload": {
