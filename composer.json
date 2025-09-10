@@ -17,8 +17,9 @@
         }
     ],
     "require": {
-        "moox/core": "3.1.125",
-        "adrolli/eloquent-mutators": "*"
+        "moox/core": "4.0.0",
+        "adrolli/eloquent-mutators": "*",
+        "moox/press": "*"
     },
     "require-dev": {
         "moox/devtools": "self.version"
@@ -36,6 +37,5 @@
             ]
         }
     },
-    "minimum-stability": "stable",
     "prefer-stable": true
 }
